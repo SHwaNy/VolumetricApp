@@ -7,31 +7,40 @@ using System.Data;
 using System.Drawing;
 using System.IO.Ports;
 using System.Linq;
+using System.Reflection.Emit;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace VolumetricApp
 {
     public partial class MainForm : Form
     {
         private readonly VideoCapture capture;
-        Bitmap capImage;
-        readonly double[,] camaeraMat = { { 496.9596652, 0.0, 605.87821196 },
-                                                        { 0.0, 499.37732365, 355.0369373 },
-                                                        { 0.0, 0.0, 1.0 } };
-        readonly double[] distCoeffs = { -0.23633821, 0.07374086, 0.0005789, -0.0008329, -0.01166726 };
+        Mat capImage = new Mat();
+        private object lockObject = new object();
+
+        double[,] cameraArr = { { 996.10168, 0.0, 1250.28519 },
+                                        { 0.0, 971.46590, 963.54126 },
+                                        { 0.0, 0.0, 1.0 } };
+        double[] distCoeffsArr = { -0.19791, 0.04151, 0.00115, 0.00031, -0.00377 };
+        double[,] newCameraArr = { { 390.16537, 0.0, 1091.17764 },
+                                              { 0.0, 468.37762, 1003.35129 },
+                                              { 0.0, 0.0, 1.0 } };
+
         Mat src = new Mat();
         double box_heigth = 0;
-
 
         public MainForm()
         {
             InitializeComponent();
             capture = new VideoCapture();
+            timerCamera.Interval = 100;
         }
-
+         
         private void MainForm_Load(object sender, EventArgs e)
         {
             cbComPort.DataSource = SerialPort.GetPortNames();
@@ -40,13 +49,19 @@ namespace VolumetricApp
             cbParity.SelectedIndex = 0;
             cbHandShake.SelectedIndex = 0;
 
-            capture.Open(0, VideoCaptureAPIs.ANY);
+            capture.Open(1, VideoCaptureAPIs.ANY);
             if (!capture.IsOpened())
             {
                 Close();
+                timerCamera.Enabled = false;
                 return;
             }
-            ClientSize = new System.Drawing.Size(capture.FrameWidth, capture.FrameHeight);
+            timerCamera.Enabled = true;
+
+            capture.Set(VideoCaptureProperties.FrameWidth, 2592);
+            capture.Set(VideoCaptureProperties.FrameHeight, 1944);
+            //ClientSize = new System.Drawing.Size(capture.FrameWidth, capture.FrameHeight);
+            ClientSize = new System.Drawing.Size(640, 480);
             CameraWorker.RunWorkerAsync();
         }
 
@@ -64,8 +79,9 @@ namespace VolumetricApp
             {
                 using (var frameMat = capture.RetrieveMat())
                 {
+                    capImage = frameMat;
                     var frameBitmap = BitmapConverter.ToBitmap(frameMat);
-                    bgWorker.ReportProgress(0, frameBitmap);
+                    //bgWorker.ReportProgress(0, frameBitmap);
                     src = frameMat;
                 }
                 Thread.Sleep(100);
@@ -78,7 +94,35 @@ namespace VolumetricApp
             pbCamera.Image?.Dispose();
             pbCamera.Image = frameBitmap;
         }
-        
+
+        private void timerCamera_Tick(object sender, EventArgs e)
+        {
+            this.Invoke(new MethodInvoker(delegate ()
+            {
+                lock (lockObject)
+                {
+                    if (capImage.IsDisposed == true) return;
+                    if (capImage.Width == 0) return;
+                    // 카메라 켈리브레이션
+                    Mat undistortImg = new Mat();
+                    Cv2.Undistort(capImage, undistortImg, InputArray.Create(cameraArr),
+                                       InputArray.Create(distCoeffsArr), InputArray.Create(newCameraArr));
+                    Mat unImg = undistortImg.SubMat(new Rect(586, 539, 1047, 937));
+                    Mat resizeImg = new Mat();
+                    Cv2.Resize(unImg, resizeImg, new OpenCvSharp.Size(640, 480));
+
+                    // 클랜징 시작
+                    Mat blur = new Mat();
+                    Cv2.EdgePreservingFilter(resizeImg, blur);
+
+                    var frameBitmap = BitmapConverter.ToBitmap(blur);
+                    pbCamera.Image?.Dispose();
+                    pbCamera.Image = frameBitmap;
+                }
+            }));
+
+        }
+
         // 진세가 만들어 놓은 함수
         static double GetBoxVolume(Mat dst, double h)
         {
@@ -264,5 +308,7 @@ namespace VolumetricApp
             }
             IsOpen = Port.IsOpen;
         }
+
+
     }
 }
