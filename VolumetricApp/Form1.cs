@@ -101,8 +101,6 @@ namespace VolumetricApp
             {
                 lock (lockObject)
                 {
-                    if (capImage.IsDisposed == true) return;
-                    if (capImage.Width == 0) return;
                     // 카메라 켈리브레이션
                     Mat undistortImg = new Mat();
                     Cv2.Undistort(capImage, undistortImg, InputArray.Create(cameraArr),
