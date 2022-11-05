@@ -23,6 +23,7 @@ namespace VolumetricApp
                                                         { 0.0, 0.0, 1.0 } };
         readonly double[] distCoeffs = { -0.23633821, 0.07374086, 0.0005789, -0.0008329, -0.01166726 };
         Mat src = new Mat();
+        double box_heigth = 0;
 
 
         public MainForm()
@@ -46,10 +47,6 @@ namespace VolumetricApp
                 return;
             }
             ClientSize = new System.Drawing.Size(capture.FrameWidth, capture.FrameHeight);
-            Cv2.GetOptimalNewCameraMatrix(InputArray.Create(camaeraMat),
-                                                           InputArray.Create(distCoeffs),
-                                                           src.Size(), 1,
-                                                           src.Size(), _);
             CameraWorker.RunWorkerAsync();
         }
 
@@ -82,7 +79,6 @@ namespace VolumetricApp
             pbCamera.Image = frameBitmap;
         }
         
-        
         // 진세가 만들어 놓은 함수
         static double GetBoxVolume(Mat dst, double h)
         {
@@ -91,8 +87,8 @@ namespace VolumetricApp
             Mat blur = new Mat();
             Mat canny = new Mat();
             Mat close = new Mat();
-            
-            Point[][] contours;
+
+            OpenCvSharp.Point[][] contours;
             HierarchyIndex[] hierarchy;
 
             // bottom_size 바닥면 넓이, max_h 바닥면에서 카메라까지 높이, box_h tof로 받은 카메라에서 상자 top까지 거리
@@ -101,11 +97,11 @@ namespace VolumetricApp
             double box_h = h;
 
             // First, change img use to canny
-            Cv2.GaussianBlur(img, blur, new Size(3, 3), 1, 0, BorderTypes.Default);
+            Cv2.GaussianBlur(img, blur, new OpenCvSharp.Size(3, 3), 1, 0, BorderTypes.Default);
             Cv2.Canny(blur, canny, 0, 50, 3, true);
 
             // Second, delete dot in your canny img with morphology
-            Mat kernel = Cv2.GetStructuringElement(MorphShapes.Cross, new Size(7, 7));
+            Mat kernel = Cv2.GetStructuringElement(MorphShapes.Cross, new OpenCvSharp.Size(7, 7));
             Cv2.MorphologyEx(canny, close, MorphTypes.Close, kernel, iterations: 1);
 
             // Third, find box most outer contours and get box volume. end!
@@ -113,7 +109,7 @@ namespace VolumetricApp
 
             double outer_area = 0;
 
-            foreach (Point[] p in contours)
+            foreach (OpenCvSharp.Point[] p in contours)
             {
                 double area = -Cv2.ContourArea(p, true);
                 if (outer_area < area)
@@ -129,7 +125,6 @@ namespace VolumetricApp
             double box_volume = bottom_size * (box_h / max_h) * box_size * (max_h - box_h);
 
             return box_volume;
-
         }
 
         private Boolean IsOpen
