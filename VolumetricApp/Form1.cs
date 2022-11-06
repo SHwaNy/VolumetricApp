@@ -14,13 +14,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Net.Mime.MediaTypeNames;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolTip;
 
 namespace VolumetricApp
 {
     public partial class MainForm : Form
     {
         private readonly VideoCapture capture;
-        Mat capImage = new Mat();
+        Mat frameCapture = new Mat();
         private object lockObject = new object();
 
         double[,] cameraArr = { { 996.10168, 0.0, 1250.28519 },
@@ -31,14 +32,10 @@ namespace VolumetricApp
                                               { 0.0, 468.37762, 1003.35129 },
                                               { 0.0, 0.0, 1.0 } };
 
-        Mat src = new Mat();
-        double box_heigth = 0;
-
         public MainForm()
         {
             InitializeComponent();
             capture = new VideoCapture();
-            timerCamera.Interval = 100;
         }
          
         private void MainForm_Load(object sender, EventArgs e)
@@ -53,15 +50,13 @@ namespace VolumetricApp
             if (!capture.IsOpened())
             {
                 Close();
-                timerCamera.Enabled = false;
                 return;
             }
-            timerCamera.Enabled = true;
 
             capture.Set(VideoCaptureProperties.FrameWidth, 2592);
             capture.Set(VideoCaptureProperties.FrameHeight, 1944);
             //ClientSize = new System.Drawing.Size(capture.FrameWidth, capture.FrameHeight);
-            ClientSize = new System.Drawing.Size(640, 480);
+            //ClientSize = new System.Drawing.Size(640, 480);
             CameraWorker.RunWorkerAsync();
         }
 
@@ -79,10 +74,15 @@ namespace VolumetricApp
             {
                 using (var frameMat = capture.RetrieveMat())
                 {
-                    capImage = frameMat;
-                    var frameBitmap = BitmapConverter.ToBitmap(frameMat);
-                    //bgWorker.ReportProgress(0, frameBitmap);
-                    src = frameMat;
+                    Mat frameDistort = new Mat();
+                    Cv2.Undistort(frameMat, frameDistort, InputArray.Create(cameraArr),
+                                       InputArray.Create(distCoeffsArr), InputArray.Create(newCameraArr));
+                    Mat frameSubMat = frameDistort.SubMat(new Rect(586, 539, 1047, 937));
+                    Mat frameResize = new Mat();
+                    Cv2.Resize(frameSubMat, frameResize, new OpenCvSharp.Size(320, 240));
+                    frameCapture = frameResize.Clone();
+                    var frameBitmap = BitmapConverter.ToBitmap(frameResize);
+                    bgWorker.ReportProgress(0, frameBitmap);
                 }
                 Thread.Sleep(100);
             }
@@ -93,32 +93,6 @@ namespace VolumetricApp
             var frameBitmap = (Bitmap)e.UserState;
             pbCamera.Image?.Dispose();
             pbCamera.Image = frameBitmap;
-        }
-
-        private void timerCamera_Tick(object sender, EventArgs e)
-        {
-            this.Invoke(new MethodInvoker(delegate ()
-            {
-                lock (lockObject)
-                {
-                    // 카메라 켈리브레이션
-                    Mat undistortImg = new Mat();
-                    Cv2.Undistort(capImage, undistortImg, InputArray.Create(cameraArr),
-                                       InputArray.Create(distCoeffsArr), InputArray.Create(newCameraArr));
-                    Mat unImg = undistortImg.SubMat(new Rect(586, 539, 1047, 937));
-                    Mat resizeImg = new Mat();
-                    Cv2.Resize(unImg, resizeImg, new OpenCvSharp.Size(640, 480));
-
-                    // 클랜징 시작
-                    Mat blur = new Mat();
-                    Cv2.EdgePreservingFilter(resizeImg, blur);
-
-                    var frameBitmap = BitmapConverter.ToBitmap(blur);
-                    pbCamera.Image?.Dispose();
-                    pbCamera.Image = frameBitmap;
-                }
-            }));
-
         }
 
         // 진세가 만들어 놓은 함수
@@ -137,6 +111,9 @@ namespace VolumetricApp
             double bottom_size = 1000.0;
             double max_h = 67;
             double box_h = h;
+
+            //Mat blur = new Mat();
+            //Cv2.EdgePreservingFilter(resizeImg, blur);
 
             // First, change img use to canny
             Cv2.GaussianBlur(img, blur, new OpenCvSharp.Size(3, 3), 1, 0, BorderTypes.Default);
@@ -279,8 +256,6 @@ namespace VolumetricApp
             }));
         }
 
-        
-
         private void btConnectControl_Click(object sender, EventArgs e)
         {
             if (!Port.IsOpen)
@@ -307,6 +282,76 @@ namespace VolumetricApp
             IsOpen = Port.IsOpen;
         }
 
+        private void btnBox_Click(object sender, EventArgs e)
+        {
+            // H = 53cm
+            Mat imgCapture = frameCapture.Clone();
+            Mat imgBlur = new Mat();
+            Mat imgCanny = new Mat();
+            Mat imgMorph = new Mat();
 
+            OpenCvSharp.Point[][] contours;
+            HierarchyIndex[] hierarchy;
+
+            // sizeBackground 바닥면 넓이
+            // heightBackground 바닥과 카메라까지 높이
+            // heightBox tof로 받은 카메라에서 상자까지 거리
+            double sizeBackground = 16432.0;
+            double heightBackground = 69.0;
+            double distanceBox = double.Parse(tbDistance.Text);
+
+            double heightBox;
+            double widthBox;
+            double depthBox;
+            double areaBox;
+            double volumeBox;
+
+            double areaRect = 0;
+            RotatedRect rect = new RotatedRect();
+
+            Cv2.EdgePreservingFilter(imgCapture, imgBlur);
+            Cv2.Canny(imgBlur, imgCanny, 150, 250, 3, true);
+            Mat kernel = Cv2.GetStructuringElement(MorphShapes.Cross, new OpenCvSharp.Size(5, 5));
+            Cv2.MorphologyEx(imgCanny, imgMorph, MorphTypes.Close, kernel, iterations: 1);
+            Cv2.FindContours(imgMorph, out contours, out hierarchy,
+                                    RetrievalModes.External, ContourApproximationModes.ApproxNone);
+
+            Point2f imgCenter = new Point2f(160, 120);
+            double upper_area = 10000;
+            double lower_area = 500;
+            foreach (OpenCvSharp.Point[] contour in contours)
+            {
+                RotatedRect _rect = Cv2.MinAreaRect(contour);
+                double _areaRect =  _rect.Size.Width * _rect.Size.Height;
+                if (_areaRect < upper_area && _areaRect > lower_area)
+                {
+                    if (_rect.Center.DistanceTo(imgCenter)  < 100)
+                    {
+                        Point2f[] box = Cv2.BoxPoints(_rect);
+                        areaRect = _areaRect;
+                        rect = _rect;
+                    }
+                }
+            }
+            double ratioBox = areaRect / (imgCapture.Height * imgCapture.Width);
+            areaBox = ratioBox * sizeBackground * (distanceBox / heightBackground);
+            depthBox = heightBackground - distanceBox;
+            volumeBox = areaBox * (depthBox);
+
+            double aspectXBox = rect.Size.Width / rect.Size.Height;
+            widthBox = Math.Sqrt(areaBox * aspectXBox);
+            heightBox = areaBox / widthBox;
+
+            widthBox = Math.Round(widthBox, 2);
+            tbBoxWidth.Text = widthBox.ToString();
+            heightBox = Math.Round(heightBox, 2);
+            tbBoxHeight.Text = heightBox.ToString();
+            depthBox = Math.Round(depthBox, 2);
+            tbBoxDepth.Text = depthBox.ToString();
+            areaBox = Math.Round(areaBox, 2);
+            tbBoxArea.Text = areaBox.ToString();
+            volumeBox = Math.Round(volumeBox, 2);
+            tbBoxVolume.Text = volumeBox.ToString();
+        }
     }
 }
