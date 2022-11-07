@@ -55,7 +55,8 @@ namespace VolumetricApp
             this.tbBoxDepth = new System.Windows.Forms.TextBox();
             this.tbBoxArea = new System.Windows.Forms.TextBox();
             this.tbBoxVolume = new System.Windows.Forms.TextBox();
-            this.tbDistance = new System.Windows.Forms.TextBox();
+            this.lblCamDistance = new System.Windows.Forms.Label();
+            this.tbCamDistance = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbCamera)).BeginInit();
             this.SuspendLayout();
             // 
@@ -68,10 +69,10 @@ namespace VolumetricApp
             // 
             // pbCamera
             // 
-            this.pbCamera.Location = new System.Drawing.Point(10, 10);
+            this.pbCamera.Location = new System.Drawing.Point(12, 12);
             this.pbCamera.Margin = new System.Windows.Forms.Padding(2);
             this.pbCamera.Name = "pbCamera";
-            this.pbCamera.Size = new System.Drawing.Size(320, 240);
+            this.pbCamera.Size = new System.Drawing.Size(400, 288);
             this.pbCamera.TabIndex = 0;
             this.pbCamera.TabStop = false;
             // 
@@ -83,17 +84,19 @@ namespace VolumetricApp
             "Xon/Xoff",
             "request to send",
             "request to send Xon/Xoff"});
-            this.cbHandShake.Location = new System.Drawing.Point(95, 375);
+            this.cbHandShake.Location = new System.Drawing.Point(119, 450);
+            this.cbHandShake.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbHandShake.Name = "cbHandShake";
-            this.cbHandShake.Size = new System.Drawing.Size(103, 23);
+            this.cbHandShake.Size = new System.Drawing.Size(128, 26);
             this.cbHandShake.TabIndex = 12;
             // 
             // lblHandShake
             // 
             this.lblHandShake.AutoSize = true;
-            this.lblHandShake.Location = new System.Drawing.Point(10, 377);
+            this.lblHandShake.Location = new System.Drawing.Point(12, 452);
+            this.lblHandShake.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblHandShake.Name = "lblHandShake";
-            this.lblHandShake.Size = new System.Drawing.Size(80, 15);
+            this.lblHandShake.Size = new System.Drawing.Size(98, 18);
             this.lblHandShake.TabIndex = 7;
             this.lblHandShake.Text = "Handshake";
             // 
@@ -106,17 +109,19 @@ namespace VolumetricApp
             "mark",
             "odd",
             "space"});
-            this.cbParity.Location = new System.Drawing.Point(95, 345);
+            this.cbParity.Location = new System.Drawing.Point(119, 414);
+            this.cbParity.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbParity.Name = "cbParity";
-            this.cbParity.Size = new System.Drawing.Size(103, 23);
+            this.cbParity.Size = new System.Drawing.Size(128, 26);
             this.cbParity.TabIndex = 13;
             // 
             // lblParity
             // 
             this.lblParity.AutoSize = true;
-            this.lblParity.Location = new System.Drawing.Point(10, 347);
+            this.lblParity.Location = new System.Drawing.Point(12, 416);
+            this.lblParity.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblParity.Name = "lblParity";
-            this.lblParity.Size = new System.Drawing.Size(44, 15);
+            this.lblParity.Size = new System.Drawing.Size(53, 18);
             this.lblParity.TabIndex = 8;
             this.lblParity.Text = "Parity";
             // 
@@ -127,17 +132,19 @@ namespace VolumetricApp
             "8",
             "7",
             "6"});
-            this.cbDataSize.Location = new System.Drawing.Point(95, 316);
+            this.cbDataSize.Location = new System.Drawing.Point(119, 379);
+            this.cbDataSize.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbDataSize.Name = "cbDataSize";
-            this.cbDataSize.Size = new System.Drawing.Size(103, 23);
+            this.cbDataSize.Size = new System.Drawing.Size(128, 26);
             this.cbDataSize.TabIndex = 14;
             // 
             // lblDataSize
             // 
             this.lblDataSize.AutoSize = true;
-            this.lblDataSize.Location = new System.Drawing.Point(10, 319);
+            this.lblDataSize.Location = new System.Drawing.Point(12, 383);
+            this.lblDataSize.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDataSize.Name = "lblDataSize";
-            this.lblDataSize.Size = new System.Drawing.Size(71, 15);
+            this.lblDataSize.Size = new System.Drawing.Size(83, 18);
             this.lblDataSize.TabIndex = 9;
             this.lblDataSize.Text = "Data Size";
             // 
@@ -151,42 +158,47 @@ namespace VolumetricApp
             "38400",
             "57600",
             "9600"});
-            this.cbBaudRate.Location = new System.Drawing.Point(95, 288);
+            this.cbBaudRate.Location = new System.Drawing.Point(119, 346);
+            this.cbBaudRate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbBaudRate.Name = "cbBaudRate";
-            this.cbBaudRate.Size = new System.Drawing.Size(103, 23);
+            this.cbBaudRate.Size = new System.Drawing.Size(128, 26);
             this.cbBaudRate.TabIndex = 15;
             // 
             // lblBuadRate
             // 
             this.lblBuadRate.AutoSize = true;
-            this.lblBuadRate.Location = new System.Drawing.Point(10, 290);
+            this.lblBuadRate.Location = new System.Drawing.Point(12, 348);
+            this.lblBuadRate.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblBuadRate.Name = "lblBuadRate";
-            this.lblBuadRate.Size = new System.Drawing.Size(76, 15);
+            this.lblBuadRate.Size = new System.Drawing.Size(91, 18);
             this.lblBuadRate.TabIndex = 10;
             this.lblBuadRate.Text = "Baud Rate";
             // 
             // cbComPort
             // 
             this.cbComPort.FormattingEnabled = true;
-            this.cbComPort.Location = new System.Drawing.Point(95, 259);
+            this.cbComPort.Location = new System.Drawing.Point(119, 311);
+            this.cbComPort.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbComPort.Name = "cbComPort";
-            this.cbComPort.Size = new System.Drawing.Size(103, 23);
+            this.cbComPort.Size = new System.Drawing.Size(128, 26);
             this.cbComPort.TabIndex = 16;
             // 
             // lblPort
             // 
             this.lblPort.AutoSize = true;
-            this.lblPort.Location = new System.Drawing.Point(10, 262);
+            this.lblPort.Location = new System.Drawing.Point(12, 314);
+            this.lblPort.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblPort.Name = "lblPort";
-            this.lblPort.Size = new System.Drawing.Size(34, 15);
+            this.lblPort.Size = new System.Drawing.Size(41, 18);
             this.lblPort.TabIndex = 11;
             this.lblPort.Text = "Port";
             // 
             // btConnectControl
             // 
-            this.btConnectControl.Location = new System.Drawing.Point(13, 403);
+            this.btConnectControl.Location = new System.Drawing.Point(16, 484);
+            this.btConnectControl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btConnectControl.Name = "btConnectControl";
-            this.btConnectControl.Size = new System.Drawing.Size(185, 28);
+            this.btConnectControl.Size = new System.Drawing.Size(231, 34);
             this.btConnectControl.TabIndex = 17;
             this.btConnectControl.Text = "Connect";
             this.btConnectControl.UseVisualStyleBackColor = true;
@@ -194,28 +206,31 @@ namespace VolumetricApp
             // 
             // tbRecvMessage
             // 
-            this.tbRecvMessage.Location = new System.Drawing.Point(220, 284);
+            this.tbRecvMessage.Location = new System.Drawing.Point(275, 341);
+            this.tbRecvMessage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tbRecvMessage.Multiline = true;
             this.tbRecvMessage.Name = "tbRecvMessage";
             this.tbRecvMessage.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.tbRecvMessage.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbRecvMessage.Size = new System.Drawing.Size(359, 149);
+            this.tbRecvMessage.Size = new System.Drawing.Size(448, 178);
             this.tbRecvMessage.TabIndex = 19;
             // 
             // lblRecvMessage
             // 
             this.lblRecvMessage.AutoSize = true;
-            this.lblRecvMessage.Location = new System.Drawing.Point(218, 262);
+            this.lblRecvMessage.Location = new System.Drawing.Point(272, 314);
+            this.lblRecvMessage.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblRecvMessage.Name = "lblRecvMessage";
-            this.lblRecvMessage.Size = new System.Drawing.Size(120, 15);
+            this.lblRecvMessage.Size = new System.Drawing.Size(147, 18);
             this.lblRecvMessage.TabIndex = 18;
             this.lblRecvMessage.Text = "ReceiveMessage";
             // 
             // btnBox
             // 
-            this.btnBox.Location = new System.Drawing.Point(335, 12);
+            this.btnBox.Location = new System.Drawing.Point(419, 14);
+            this.btnBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnBox.Name = "btnBox";
-            this.btnBox.Size = new System.Drawing.Size(67, 162);
+            this.btnBox.Size = new System.Drawing.Size(84, 229);
             this.btnBox.TabIndex = 20;
             this.btnBox.Text = "Volume";
             this.btnBox.UseVisualStyleBackColor = true;
@@ -223,102 +238,124 @@ namespace VolumetricApp
             // 
             // tbBoxWidth
             // 
-            this.tbBoxWidth.Location = new System.Drawing.Point(512, 16);
+            this.tbBoxWidth.Location = new System.Drawing.Point(640, 19);
+            this.tbBoxWidth.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tbBoxWidth.Name = "tbBoxWidth";
             this.tbBoxWidth.ReadOnly = true;
-            this.tbBoxWidth.Size = new System.Drawing.Size(67, 25);
+            this.tbBoxWidth.Size = new System.Drawing.Size(83, 28);
             this.tbBoxWidth.TabIndex = 21;
             // 
             // lblBoxX
             // 
             this.lblBoxX.AutoSize = true;
-            this.lblBoxX.Location = new System.Drawing.Point(418, 19);
+            this.lblBoxX.Location = new System.Drawing.Point(522, 23);
+            this.lblBoxX.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblBoxX.Name = "lblBoxX";
-            this.lblBoxX.Size = new System.Drawing.Size(77, 15);
+            this.lblBoxX.Size = new System.Drawing.Size(89, 18);
             this.lblBoxX.TabIndex = 18;
             this.lblBoxX.Text = "Box Width";
             // 
             // lblBoxZ
             // 
             this.lblBoxZ.AutoSize = true;
-            this.lblBoxZ.Location = new System.Drawing.Point(417, 89);
+            this.lblBoxZ.Location = new System.Drawing.Point(521, 107);
+            this.lblBoxZ.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblBoxZ.Name = "lblBoxZ";
-            this.lblBoxZ.Size = new System.Drawing.Size(78, 15);
+            this.lblBoxZ.Size = new System.Drawing.Size(92, 18);
             this.lblBoxZ.TabIndex = 18;
             this.lblBoxZ.Text = "Box Depth";
             // 
             // lblBoxY
             // 
             this.lblBoxY.AutoSize = true;
-            this.lblBoxY.Location = new System.Drawing.Point(418, 55);
+            this.lblBoxY.Location = new System.Drawing.Point(522, 66);
+            this.lblBoxY.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblBoxY.Name = "lblBoxY";
-            this.lblBoxY.Size = new System.Drawing.Size(81, 15);
+            this.lblBoxY.Size = new System.Drawing.Size(95, 18);
             this.lblBoxY.TabIndex = 18;
             this.lblBoxY.Text = "Box Heigth";
             // 
             // lblBoxArea
             // 
             this.lblBoxArea.AutoSize = true;
-            this.lblBoxArea.Location = new System.Drawing.Point(417, 121);
+            this.lblBoxArea.Location = new System.Drawing.Point(521, 145);
+            this.lblBoxArea.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblBoxArea.Name = "lblBoxArea";
-            this.lblBoxArea.Size = new System.Drawing.Size(69, 15);
+            this.lblBoxArea.Size = new System.Drawing.Size(84, 18);
             this.lblBoxArea.TabIndex = 18;
             this.lblBoxArea.Text = "Box Area";
             // 
             // lblBoxVolume
             // 
             this.lblBoxVolume.AutoSize = true;
-            this.lblBoxVolume.Location = new System.Drawing.Point(418, 152);
+            this.lblBoxVolume.Location = new System.Drawing.Point(522, 182);
+            this.lblBoxVolume.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblBoxVolume.Name = "lblBoxVolume";
-            this.lblBoxVolume.Size = new System.Drawing.Size(87, 15);
+            this.lblBoxVolume.Size = new System.Drawing.Size(106, 18);
             this.lblBoxVolume.TabIndex = 18;
             this.lblBoxVolume.Text = "Box Volume";
             // 
             // tbBoxHeight
             // 
-            this.tbBoxHeight.Location = new System.Drawing.Point(512, 52);
+            this.tbBoxHeight.Location = new System.Drawing.Point(640, 62);
+            this.tbBoxHeight.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tbBoxHeight.Name = "tbBoxHeight";
             this.tbBoxHeight.ReadOnly = true;
-            this.tbBoxHeight.Size = new System.Drawing.Size(67, 25);
+            this.tbBoxHeight.Size = new System.Drawing.Size(83, 28);
             this.tbBoxHeight.TabIndex = 21;
             // 
             // tbBoxDepth
             // 
-            this.tbBoxDepth.Location = new System.Drawing.Point(512, 86);
+            this.tbBoxDepth.Location = new System.Drawing.Point(640, 103);
+            this.tbBoxDepth.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tbBoxDepth.Name = "tbBoxDepth";
             this.tbBoxDepth.ReadOnly = true;
-            this.tbBoxDepth.Size = new System.Drawing.Size(67, 25);
+            this.tbBoxDepth.Size = new System.Drawing.Size(83, 28);
             this.tbBoxDepth.TabIndex = 21;
             // 
             // tbBoxArea
             // 
-            this.tbBoxArea.Location = new System.Drawing.Point(512, 118);
+            this.tbBoxArea.Location = new System.Drawing.Point(640, 142);
+            this.tbBoxArea.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tbBoxArea.Name = "tbBoxArea";
             this.tbBoxArea.ReadOnly = true;
-            this.tbBoxArea.Size = new System.Drawing.Size(67, 25);
+            this.tbBoxArea.Size = new System.Drawing.Size(83, 28);
             this.tbBoxArea.TabIndex = 21;
             // 
             // tbBoxVolume
             // 
-            this.tbBoxVolume.Location = new System.Drawing.Point(512, 149);
+            this.tbBoxVolume.Location = new System.Drawing.Point(640, 179);
+            this.tbBoxVolume.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tbBoxVolume.Name = "tbBoxVolume";
             this.tbBoxVolume.ReadOnly = true;
-            this.tbBoxVolume.Size = new System.Drawing.Size(67, 25);
+            this.tbBoxVolume.Size = new System.Drawing.Size(83, 28);
             this.tbBoxVolume.TabIndex = 21;
             // 
-            // tbDistance
+            // lblCamDistance
             // 
-            this.tbDistance.Location = new System.Drawing.Point(335, 180);
-            this.tbDistance.Name = "tbDistance";
-            this.tbDistance.Size = new System.Drawing.Size(100, 25);
-            this.tbDistance.TabIndex = 22;
+            this.lblCamDistance.AutoSize = true;
+            this.lblCamDistance.Location = new System.Drawing.Point(522, 218);
+            this.lblCamDistance.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblCamDistance.Name = "lblCamDistance";
+            this.lblCamDistance.Size = new System.Drawing.Size(77, 18);
+            this.lblCamDistance.TabIndex = 18;
+            this.lblCamDistance.Text = "Distance";
+            // 
+            // tbCamDistance
+            // 
+            this.tbCamDistance.Location = new System.Drawing.Point(640, 215);
+            this.tbCamDistance.Margin = new System.Windows.Forms.Padding(4);
+            this.tbCamDistance.Name = "tbCamDistance";
+            this.tbCamDistance.ReadOnly = true;
+            this.tbCamDistance.Size = new System.Drawing.Size(83, 28);
+            this.tbCamDistance.TabIndex = 21;
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(595, 446);
-            this.Controls.Add(this.tbDistance);
+            this.ClientSize = new System.Drawing.Size(744, 535);
+            this.Controls.Add(this.tbCamDistance);
             this.Controls.Add(this.tbBoxVolume);
             this.Controls.Add(this.tbBoxArea);
             this.Controls.Add(this.tbBoxDepth);
@@ -326,6 +363,7 @@ namespace VolumetricApp
             this.Controls.Add(this.tbBoxWidth);
             this.Controls.Add(this.btnBox);
             this.Controls.Add(this.tbRecvMessage);
+            this.Controls.Add(this.lblCamDistance);
             this.Controls.Add(this.lblBoxY);
             this.Controls.Add(this.lblBoxVolume);
             this.Controls.Add(this.lblBoxArea);
@@ -383,7 +421,8 @@ namespace VolumetricApp
         private System.Windows.Forms.TextBox tbBoxDepth;
         private System.Windows.Forms.TextBox tbBoxArea;
         private System.Windows.Forms.TextBox tbBoxVolume;
-        private System.Windows.Forms.TextBox tbDistance;
+        public System.Windows.Forms.Label lblCamDistance;
+        private System.Windows.Forms.TextBox tbCamDistance;
     }
 }
 

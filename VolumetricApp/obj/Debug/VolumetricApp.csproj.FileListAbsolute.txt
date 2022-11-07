@@ -64,3 +64,4 @@ C:\CSharp\VolumetricApp\VolumetricApp\obj\Debug\VolumetricApp.csproj.CoreCompile
 C:\CSharp\VolumetricApp\VolumetricApp\obj\Debug\VolumetricApp.csproj.CopyComplete
 C:\CSharp\VolumetricApp\VolumetricApp\obj\Debug\VolumetricApp.exe
 C:\CSharp\VolumetricApp\VolumetricApp\obj\Debug\VolumetricApp.pdb
+D:\CSharp\VolumetricApp\VolumetricApp\bin\Debug\System.Drawing.Common.xml

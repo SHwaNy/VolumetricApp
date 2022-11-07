@@ -22,7 +22,7 @@ namespace VolumetricApp
     {
         private readonly VideoCapture capture;
         Mat frameCapture = new Mat();
-        private object lockObject = new object();
+        double cameraDistance = 0;
 
         double[,] cameraArr = { { 996.10168, 0.0, 1250.28519 },
                                         { 0.0, 971.46590, 963.54126 },
@@ -46,7 +46,7 @@ namespace VolumetricApp
             cbParity.SelectedIndex = 0;
             cbHandShake.SelectedIndex = 0;
 
-            capture.Open(1, VideoCaptureAPIs.ANY);
+            capture.Open(0, VideoCaptureAPIs.ANY);
             if (!capture.IsOpened())
             {
                 Close();
@@ -201,6 +201,7 @@ namespace VolumetricApp
                     UInt32 mean = (map[0] + map[1] + map[2] + map[3]) / 4;
 
                     StringsRecv = String.Format("[RECV] {0}", mean / 1000);
+                    cameraDistance = Convert.ToDouble(mean / 10000);
                 }
             }));
         }
@@ -247,7 +248,8 @@ namespace VolumetricApp
             // heightBox tof로 받은 카메라에서 상자까지 거리
             double sizeBackground = 16432.0;
             double heightBackground = 69.0;
-            double distanceBox = double.Parse(tbDistance.Text);
+            //double distanceBox = double.Parse(tbDistance.Text);
+            double distanceBox = cameraDistance;
 
             double heightBox;
             double widthBox;
@@ -291,6 +293,8 @@ namespace VolumetricApp
             widthBox = Math.Sqrt(areaBox * aspectXBox);
             heightBox = areaBox / widthBox;
 
+            distanceBox = Math.Round(distanceBox, 2);
+            tbCamDistance.Text = distanceBox.ToString();
             widthBox = Math.Round(widthBox, 2);
             tbBoxWidth.Text = widthBox.ToString();
             heightBox = Math.Round(heightBox, 2);
