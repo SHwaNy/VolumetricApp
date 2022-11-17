@@ -29,6 +29,7 @@ namespace VolumetricApp
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.CameraWorker = new System.ComponentModel.BackgroundWorker();
             this.pbCamera = new System.Windows.Forms.PictureBox();
             this.cbHandShake = new System.Windows.Forms.ComboBox();
@@ -57,7 +58,20 @@ namespace VolumetricApp
             this.tbBoxVolume = new System.Windows.Forms.TextBox();
             this.lblCamDistance = new System.Windows.Forms.Label();
             this.tbCamDistance = new System.Windows.Forms.TextBox();
+            this.cbCamList = new System.Windows.Forms.ComboBox();
+            this.lblCamList = new System.Windows.Forms.Label();
+            this.btnCamStart = new System.Windows.Forms.Button();
+            this.btnCalibration = new System.Windows.Forms.Button();
+            this.btnCapture = new System.Windows.Forms.Button();
+            this.pbCalibration = new System.Windows.Forms.PictureBox();
+            this.tbCapImg = new System.Windows.Forms.TextBox();
+            this.btnCalbStart = new System.Windows.Forms.Button();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tbThres1 = new System.Windows.Forms.TextBox();
+            this.tbThres2 = new System.Windows.Forms.TextBox();
+            this.tbApeture = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbCamera)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbCalibration)).BeginInit();
             this.SuspendLayout();
             // 
             // CameraWorker
@@ -72,7 +86,8 @@ namespace VolumetricApp
             this.pbCamera.Location = new System.Drawing.Point(12, 12);
             this.pbCamera.Margin = new System.Windows.Forms.Padding(2);
             this.pbCamera.Name = "pbCamera";
-            this.pbCamera.Size = new System.Drawing.Size(400, 288);
+            this.pbCamera.Size = new System.Drawing.Size(520, 325);
+            this.pbCamera.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbCamera.TabIndex = 0;
             this.pbCamera.TabStop = false;
             // 
@@ -84,8 +99,8 @@ namespace VolumetricApp
             "Xon/Xoff",
             "request to send",
             "request to send Xon/Xoff"});
-            this.cbHandShake.Location = new System.Drawing.Point(119, 450);
-            this.cbHandShake.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbHandShake.Location = new System.Drawing.Point(724, 484);
+            this.cbHandShake.Margin = new System.Windows.Forms.Padding(4);
             this.cbHandShake.Name = "cbHandShake";
             this.cbHandShake.Size = new System.Drawing.Size(128, 26);
             this.cbHandShake.TabIndex = 12;
@@ -93,7 +108,7 @@ namespace VolumetricApp
             // lblHandShake
             // 
             this.lblHandShake.AutoSize = true;
-            this.lblHandShake.Location = new System.Drawing.Point(12, 452);
+            this.lblHandShake.Location = new System.Drawing.Point(617, 486);
             this.lblHandShake.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblHandShake.Name = "lblHandShake";
             this.lblHandShake.Size = new System.Drawing.Size(98, 18);
@@ -109,8 +124,8 @@ namespace VolumetricApp
             "mark",
             "odd",
             "space"});
-            this.cbParity.Location = new System.Drawing.Point(119, 414);
-            this.cbParity.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbParity.Location = new System.Drawing.Point(724, 448);
+            this.cbParity.Margin = new System.Windows.Forms.Padding(4);
             this.cbParity.Name = "cbParity";
             this.cbParity.Size = new System.Drawing.Size(128, 26);
             this.cbParity.TabIndex = 13;
@@ -118,7 +133,7 @@ namespace VolumetricApp
             // lblParity
             // 
             this.lblParity.AutoSize = true;
-            this.lblParity.Location = new System.Drawing.Point(12, 416);
+            this.lblParity.Location = new System.Drawing.Point(617, 450);
             this.lblParity.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblParity.Name = "lblParity";
             this.lblParity.Size = new System.Drawing.Size(53, 18);
@@ -132,8 +147,8 @@ namespace VolumetricApp
             "8",
             "7",
             "6"});
-            this.cbDataSize.Location = new System.Drawing.Point(119, 379);
-            this.cbDataSize.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbDataSize.Location = new System.Drawing.Point(724, 413);
+            this.cbDataSize.Margin = new System.Windows.Forms.Padding(4);
             this.cbDataSize.Name = "cbDataSize";
             this.cbDataSize.Size = new System.Drawing.Size(128, 26);
             this.cbDataSize.TabIndex = 14;
@@ -141,7 +156,7 @@ namespace VolumetricApp
             // lblDataSize
             // 
             this.lblDataSize.AutoSize = true;
-            this.lblDataSize.Location = new System.Drawing.Point(12, 383);
+            this.lblDataSize.Location = new System.Drawing.Point(617, 417);
             this.lblDataSize.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDataSize.Name = "lblDataSize";
             this.lblDataSize.Size = new System.Drawing.Size(83, 18);
@@ -158,8 +173,8 @@ namespace VolumetricApp
             "38400",
             "57600",
             "9600"});
-            this.cbBaudRate.Location = new System.Drawing.Point(119, 346);
-            this.cbBaudRate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbBaudRate.Location = new System.Drawing.Point(724, 380);
+            this.cbBaudRate.Margin = new System.Windows.Forms.Padding(4);
             this.cbBaudRate.Name = "cbBaudRate";
             this.cbBaudRate.Size = new System.Drawing.Size(128, 26);
             this.cbBaudRate.TabIndex = 15;
@@ -167,7 +182,7 @@ namespace VolumetricApp
             // lblBuadRate
             // 
             this.lblBuadRate.AutoSize = true;
-            this.lblBuadRate.Location = new System.Drawing.Point(12, 348);
+            this.lblBuadRate.Location = new System.Drawing.Point(617, 382);
             this.lblBuadRate.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblBuadRate.Name = "lblBuadRate";
             this.lblBuadRate.Size = new System.Drawing.Size(91, 18);
@@ -177,8 +192,8 @@ namespace VolumetricApp
             // cbComPort
             // 
             this.cbComPort.FormattingEnabled = true;
-            this.cbComPort.Location = new System.Drawing.Point(119, 311);
-            this.cbComPort.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbComPort.Location = new System.Drawing.Point(724, 345);
+            this.cbComPort.Margin = new System.Windows.Forms.Padding(4);
             this.cbComPort.Name = "cbComPort";
             this.cbComPort.Size = new System.Drawing.Size(128, 26);
             this.cbComPort.TabIndex = 16;
@@ -186,7 +201,7 @@ namespace VolumetricApp
             // lblPort
             // 
             this.lblPort.AutoSize = true;
-            this.lblPort.Location = new System.Drawing.Point(12, 314);
+            this.lblPort.Location = new System.Drawing.Point(617, 348);
             this.lblPort.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblPort.Name = "lblPort";
             this.lblPort.Size = new System.Drawing.Size(41, 18);
@@ -195,10 +210,10 @@ namespace VolumetricApp
             // 
             // btConnectControl
             // 
-            this.btConnectControl.Location = new System.Drawing.Point(16, 484);
-            this.btConnectControl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btConnectControl.Location = new System.Drawing.Point(548, 292);
+            this.btConnectControl.Margin = new System.Windows.Forms.Padding(4);
             this.btConnectControl.Name = "btConnectControl";
-            this.btConnectControl.Size = new System.Drawing.Size(231, 34);
+            this.btConnectControl.Size = new System.Drawing.Size(301, 45);
             this.btConnectControl.TabIndex = 17;
             this.btConnectControl.Text = "Connect";
             this.btConnectControl.UseVisualStyleBackColor = true;
@@ -206,19 +221,19 @@ namespace VolumetricApp
             // 
             // tbRecvMessage
             // 
-            this.tbRecvMessage.Location = new System.Drawing.Point(275, 341);
-            this.tbRecvMessage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbRecvMessage.Location = new System.Drawing.Point(13, 375);
+            this.tbRecvMessage.Margin = new System.Windows.Forms.Padding(4);
             this.tbRecvMessage.Multiline = true;
             this.tbRecvMessage.Name = "tbRecvMessage";
             this.tbRecvMessage.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.tbRecvMessage.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbRecvMessage.Size = new System.Drawing.Size(448, 178);
+            this.tbRecvMessage.Size = new System.Drawing.Size(584, 135);
             this.tbRecvMessage.TabIndex = 19;
             // 
             // lblRecvMessage
             // 
             this.lblRecvMessage.AutoSize = true;
-            this.lblRecvMessage.Location = new System.Drawing.Point(272, 314);
+            this.lblRecvMessage.Location = new System.Drawing.Point(9, 348);
             this.lblRecvMessage.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblRecvMessage.Name = "lblRecvMessage";
             this.lblRecvMessage.Size = new System.Drawing.Size(147, 18);
@@ -227,10 +242,10 @@ namespace VolumetricApp
             // 
             // btnBox
             // 
-            this.btnBox.Location = new System.Drawing.Point(419, 14);
-            this.btnBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnBox.Location = new System.Drawing.Point(548, 74);
+            this.btnBox.Margin = new System.Windows.Forms.Padding(4);
             this.btnBox.Name = "btnBox";
-            this.btnBox.Size = new System.Drawing.Size(84, 229);
+            this.btnBox.Size = new System.Drawing.Size(84, 207);
             this.btnBox.TabIndex = 20;
             this.btnBox.Text = "Volume";
             this.btnBox.UseVisualStyleBackColor = true;
@@ -238,8 +253,8 @@ namespace VolumetricApp
             // 
             // tbBoxWidth
             // 
-            this.tbBoxWidth.Location = new System.Drawing.Point(640, 19);
-            this.tbBoxWidth.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbBoxWidth.Location = new System.Drawing.Point(766, 74);
+            this.tbBoxWidth.Margin = new System.Windows.Forms.Padding(4);
             this.tbBoxWidth.Name = "tbBoxWidth";
             this.tbBoxWidth.ReadOnly = true;
             this.tbBoxWidth.Size = new System.Drawing.Size(83, 28);
@@ -248,7 +263,7 @@ namespace VolumetricApp
             // lblBoxX
             // 
             this.lblBoxX.AutoSize = true;
-            this.lblBoxX.Location = new System.Drawing.Point(522, 23);
+            this.lblBoxX.Location = new System.Drawing.Point(648, 78);
             this.lblBoxX.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblBoxX.Name = "lblBoxX";
             this.lblBoxX.Size = new System.Drawing.Size(89, 18);
@@ -258,7 +273,7 @@ namespace VolumetricApp
             // lblBoxZ
             // 
             this.lblBoxZ.AutoSize = true;
-            this.lblBoxZ.Location = new System.Drawing.Point(521, 107);
+            this.lblBoxZ.Location = new System.Drawing.Point(648, 148);
             this.lblBoxZ.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblBoxZ.Name = "lblBoxZ";
             this.lblBoxZ.Size = new System.Drawing.Size(92, 18);
@@ -268,7 +283,7 @@ namespace VolumetricApp
             // lblBoxY
             // 
             this.lblBoxY.AutoSize = true;
-            this.lblBoxY.Location = new System.Drawing.Point(522, 66);
+            this.lblBoxY.Location = new System.Drawing.Point(648, 114);
             this.lblBoxY.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblBoxY.Name = "lblBoxY";
             this.lblBoxY.Size = new System.Drawing.Size(95, 18);
@@ -278,7 +293,7 @@ namespace VolumetricApp
             // lblBoxArea
             // 
             this.lblBoxArea.AutoSize = true;
-            this.lblBoxArea.Location = new System.Drawing.Point(521, 145);
+            this.lblBoxArea.Location = new System.Drawing.Point(647, 183);
             this.lblBoxArea.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblBoxArea.Name = "lblBoxArea";
             this.lblBoxArea.Size = new System.Drawing.Size(84, 18);
@@ -288,7 +303,7 @@ namespace VolumetricApp
             // lblBoxVolume
             // 
             this.lblBoxVolume.AutoSize = true;
-            this.lblBoxVolume.Location = new System.Drawing.Point(522, 182);
+            this.lblBoxVolume.Location = new System.Drawing.Point(648, 220);
             this.lblBoxVolume.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblBoxVolume.Name = "lblBoxVolume";
             this.lblBoxVolume.Size = new System.Drawing.Size(106, 18);
@@ -297,8 +312,8 @@ namespace VolumetricApp
             // 
             // tbBoxHeight
             // 
-            this.tbBoxHeight.Location = new System.Drawing.Point(640, 62);
-            this.tbBoxHeight.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbBoxHeight.Location = new System.Drawing.Point(766, 110);
+            this.tbBoxHeight.Margin = new System.Windows.Forms.Padding(4);
             this.tbBoxHeight.Name = "tbBoxHeight";
             this.tbBoxHeight.ReadOnly = true;
             this.tbBoxHeight.Size = new System.Drawing.Size(83, 28);
@@ -306,8 +321,8 @@ namespace VolumetricApp
             // 
             // tbBoxDepth
             // 
-            this.tbBoxDepth.Location = new System.Drawing.Point(640, 103);
-            this.tbBoxDepth.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbBoxDepth.Location = new System.Drawing.Point(767, 145);
+            this.tbBoxDepth.Margin = new System.Windows.Forms.Padding(4);
             this.tbBoxDepth.Name = "tbBoxDepth";
             this.tbBoxDepth.ReadOnly = true;
             this.tbBoxDepth.Size = new System.Drawing.Size(83, 28);
@@ -315,8 +330,8 @@ namespace VolumetricApp
             // 
             // tbBoxArea
             // 
-            this.tbBoxArea.Location = new System.Drawing.Point(640, 142);
-            this.tbBoxArea.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbBoxArea.Location = new System.Drawing.Point(767, 180);
+            this.tbBoxArea.Margin = new System.Windows.Forms.Padding(4);
             this.tbBoxArea.Name = "tbBoxArea";
             this.tbBoxArea.ReadOnly = true;
             this.tbBoxArea.Size = new System.Drawing.Size(83, 28);
@@ -324,8 +339,8 @@ namespace VolumetricApp
             // 
             // tbBoxVolume
             // 
-            this.tbBoxVolume.Location = new System.Drawing.Point(640, 179);
-            this.tbBoxVolume.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbBoxVolume.Location = new System.Drawing.Point(767, 217);
+            this.tbBoxVolume.Margin = new System.Windows.Forms.Padding(4);
             this.tbBoxVolume.Name = "tbBoxVolume";
             this.tbBoxVolume.ReadOnly = true;
             this.tbBoxVolume.Size = new System.Drawing.Size(83, 28);
@@ -334,7 +349,7 @@ namespace VolumetricApp
             // lblCamDistance
             // 
             this.lblCamDistance.AutoSize = true;
-            this.lblCamDistance.Location = new System.Drawing.Point(522, 218);
+            this.lblCamDistance.Location = new System.Drawing.Point(648, 256);
             this.lblCamDistance.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCamDistance.Name = "lblCamDistance";
             this.lblCamDistance.Size = new System.Drawing.Size(77, 18);
@@ -343,23 +358,139 @@ namespace VolumetricApp
             // 
             // tbCamDistance
             // 
-            this.tbCamDistance.Location = new System.Drawing.Point(640, 215);
+            this.tbCamDistance.Location = new System.Drawing.Point(767, 253);
             this.tbCamDistance.Margin = new System.Windows.Forms.Padding(4);
             this.tbCamDistance.Name = "tbCamDistance";
             this.tbCamDistance.ReadOnly = true;
             this.tbCamDistance.Size = new System.Drawing.Size(83, 28);
             this.tbCamDistance.TabIndex = 21;
             // 
+            // cbCamList
+            // 
+            this.cbCamList.FormattingEnabled = true;
+            this.cbCamList.Location = new System.Drawing.Point(548, 35);
+            this.cbCamList.Name = "cbCamList";
+            this.cbCamList.Size = new System.Drawing.Size(121, 26);
+            this.cbCamList.TabIndex = 22;
+            // 
+            // lblCamList
+            // 
+            this.lblCamList.AutoSize = true;
+            this.lblCamList.Location = new System.Drawing.Point(545, 9);
+            this.lblCamList.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblCamList.Name = "lblCamList";
+            this.lblCamList.Size = new System.Drawing.Size(104, 18);
+            this.lblCamList.TabIndex = 18;
+            this.lblCamList.Text = "Camera List";
+            // 
+            // btnCamStart
+            // 
+            this.btnCamStart.Location = new System.Drawing.Point(682, 12);
+            this.btnCamStart.Name = "btnCamStart";
+            this.btnCamStart.Size = new System.Drawing.Size(168, 49);
+            this.btnCamStart.TabIndex = 23;
+            this.btnCamStart.Text = "Cam Start";
+            this.btnCamStart.UseVisualStyleBackColor = true;
+            this.btnCamStart.Click += new System.EventHandler(this.btnCamStart_Click);
+            // 
+            // btnCalibration
+            // 
+            this.btnCalibration.Location = new System.Drawing.Point(1257, 9);
+            this.btnCalibration.Name = "btnCalibration";
+            this.btnCalibration.Size = new System.Drawing.Size(133, 40);
+            this.btnCalibration.TabIndex = 24;
+            this.btnCalibration.Text = "Calibration";
+            this.btnCalibration.UseVisualStyleBackColor = true;
+            this.btnCalibration.Click += new System.EventHandler(this.btnCalibration_Click);
+            // 
+            // btnCapture
+            // 
+            this.btnCapture.Location = new System.Drawing.Point(1009, 12);
+            this.btnCapture.Name = "btnCapture";
+            this.btnCapture.Size = new System.Drawing.Size(86, 37);
+            this.btnCapture.TabIndex = 25;
+            this.btnCapture.Text = "Capture";
+            this.btnCapture.UseVisualStyleBackColor = true;
+            this.btnCapture.Click += new System.EventHandler(this.btnCapture_Click);
+            // 
+            // pbCalibration
+            // 
+            this.pbCalibration.Location = new System.Drawing.Point(870, 57);
+            this.pbCalibration.Margin = new System.Windows.Forms.Padding(2);
+            this.pbCalibration.Name = "pbCalibration";
+            this.pbCalibration.Size = new System.Drawing.Size(520, 325);
+            this.pbCalibration.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbCalibration.TabIndex = 0;
+            this.pbCalibration.TabStop = false;
+            // 
+            // tbCapImg
+            // 
+            this.tbCapImg.Location = new System.Drawing.Point(1102, 18);
+            this.tbCapImg.Margin = new System.Windows.Forms.Padding(4);
+            this.tbCapImg.Name = "tbCapImg";
+            this.tbCapImg.ReadOnly = true;
+            this.tbCapImg.Size = new System.Drawing.Size(83, 28);
+            this.tbCapImg.TabIndex = 21;
+            // 
+            // btnCalbStart
+            // 
+            this.btnCalbStart.Location = new System.Drawing.Point(870, 12);
+            this.btnCalbStart.Name = "btnCalbStart";
+            this.btnCalbStart.Size = new System.Drawing.Size(133, 37);
+            this.btnCalbStart.TabIndex = 26;
+            this.btnCalbStart.Text = "Calib Start";
+            this.btnCalbStart.UseVisualStyleBackColor = true;
+            this.btnCalbStart.Click += new System.EventHandler(this.btnCalbStart_Click);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            // 
+            // tbThres1
+            // 
+            this.tbThres1.Location = new System.Drawing.Point(870, 387);
+            this.tbThres1.Name = "tbThres1";
+            this.tbThres1.Size = new System.Drawing.Size(100, 28);
+            this.tbThres1.TabIndex = 27;
+            this.tbThres1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbThres1_KeyPress);
+            // 
+            // tbThres2
+            // 
+            this.tbThres2.Location = new System.Drawing.Point(870, 438);
+            this.tbThres2.Name = "tbThres2";
+            this.tbThres2.Size = new System.Drawing.Size(100, 28);
+            this.tbThres2.TabIndex = 27;
+            this.tbThres2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbThres2_KeyPress);
+            // 
+            // tbApeture
+            // 
+            this.tbApeture.Location = new System.Drawing.Point(870, 484);
+            this.tbApeture.Name = "tbApeture";
+            this.tbApeture.Size = new System.Drawing.Size(100, 28);
+            this.tbApeture.TabIndex = 27;
+            this.tbApeture.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbApeture_KeyPress);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(744, 535);
+            this.ClientSize = new System.Drawing.Size(1409, 527);
+            this.Controls.Add(this.tbApeture);
+            this.Controls.Add(this.tbThres2);
+            this.Controls.Add(this.tbThres1);
+            this.Controls.Add(this.btnCalbStart);
+            this.Controls.Add(this.btnCapture);
+            this.Controls.Add(this.btnCalibration);
+            this.Controls.Add(this.btnCamStart);
+            this.Controls.Add(this.cbCamList);
             this.Controls.Add(this.tbCamDistance);
             this.Controls.Add(this.tbBoxVolume);
             this.Controls.Add(this.tbBoxArea);
             this.Controls.Add(this.tbBoxDepth);
             this.Controls.Add(this.tbBoxHeight);
+            this.Controls.Add(this.tbCapImg);
             this.Controls.Add(this.tbBoxWidth);
             this.Controls.Add(this.btnBox);
             this.Controls.Add(this.tbRecvMessage);
@@ -368,6 +499,7 @@ namespace VolumetricApp
             this.Controls.Add(this.lblBoxVolume);
             this.Controls.Add(this.lblBoxArea);
             this.Controls.Add(this.lblBoxZ);
+            this.Controls.Add(this.lblCamList);
             this.Controls.Add(this.lblBoxX);
             this.Controls.Add(this.lblRecvMessage);
             this.Controls.Add(this.btConnectControl);
@@ -381,6 +513,7 @@ namespace VolumetricApp
             this.Controls.Add(this.lblBuadRate);
             this.Controls.Add(this.cbComPort);
             this.Controls.Add(this.lblPort);
+            this.Controls.Add(this.pbCalibration);
             this.Controls.Add(this.pbCamera);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MainForm";
@@ -388,6 +521,7 @@ namespace VolumetricApp
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pbCamera)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbCalibration)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -423,6 +557,18 @@ namespace VolumetricApp
         private System.Windows.Forms.TextBox tbBoxVolume;
         public System.Windows.Forms.Label lblCamDistance;
         private System.Windows.Forms.TextBox tbCamDistance;
+        private System.Windows.Forms.ComboBox cbCamList;
+        private System.Windows.Forms.Label lblCamList;
+        private System.Windows.Forms.Button btnCamStart;
+        private System.Windows.Forms.Button btnCalibration;
+        private System.Windows.Forms.Button btnCapture;
+        private System.Windows.Forms.PictureBox pbCalibration;
+        private System.Windows.Forms.TextBox tbCapImg;
+        private System.Windows.Forms.Button btnCalbStart;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.TextBox tbThres1;
+        private System.Windows.Forms.TextBox tbThres2;
+        private System.Windows.Forms.TextBox tbApeture;
     }
 }
 
